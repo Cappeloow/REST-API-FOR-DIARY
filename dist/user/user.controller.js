@@ -16,6 +16,10 @@ exports.createUser = void 0;
 const user_model_1 = __importDefault(require("./user.model"));
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newUser = yield user_model_1.default.create(req.body);
+    if (!newUser) {
+        res.status(400).json(req.body);
+    }
+    console.log(newUser);
     res.status(201).json(newUser);
 });
 exports.createUser = createUser;

@@ -1,19 +1,19 @@
 import express from "express";
 import mongoose from "mongoose";
+const UserRoute = require('./user/user.route');
 const app = express();
 
 
-//middlewares
+
 
 app.use(express.json());
-//Routes
 
-//init app / connect to DB
-const initApp = () => {
+
+app.use('/api/users', UserRoute )
+
+const initApp = async ()   => {
     mongoose.set("strictQuery", false);
-    mongoose.connect("mongodb://localhost:27017/ts-api-diary").
-    then(() => console.log("connected to mongoDB"))
-    .catch(() => console.log("couldn't connect to the database"))
+    await mongoose.connect('mongodb://127.0.0.1:27017/diary-api-js-db')
     app.listen(3000, () => console.log("server is up on port 3000"));
 }
 
