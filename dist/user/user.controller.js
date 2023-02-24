@@ -14,12 +14,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createUser = void 0;
 const user_model_1 = __importDefault(require("./user.model"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newUser = yield user_model_1.default.create(req.body);
+    const newUser = yield new user_model_1.default(req.body);
     if (!newUser) {
         res.status(400).json(req.body);
     }
-    console.log(newUser);
-    res.status(201).json(newUser);
+    const hashedPassword = newUser.password;
+    hashPassword(newUser);
+    newUser.password = hashedPassword;
+    res.status(200).json(newUser);
 });
 exports.createUser = createUser;
+function hashPassword(user) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const password = user.password;
+        const saltRounds = 10;
+        const hashedPassword = yield new Promise((resolve, reject) => {
+            bcrypt_1.default.hash(password, saltRounds, function (err, hash) {
+                if (err)
+                    reject(err);
+                resolve(hash);
+            });
+        });
+        return hashedPassword;
+    });
+}

@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "build": "npx tsc -w",
-    "start":"npx nodemon server.ts"
+    "start": "npx nodemon server.ts"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "nodemon": "^2.0.20"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "ts-node": "^10.9.1"
   }
 }
