@@ -2,36 +2,33 @@ import UserModel from "./user.model";
 import { Request, Response } from "express-serve-static-core";
 import bcrypt from "bcrypt";
 
-const createUser = async (req:Request,res:Response) => {
+export const createUser = async (req:Request,res:Response) => {
+  try {
+    const newUser = await new UserModel(req.body)
+    const isTaken = await UserModel.findOne({username:newUser.username});
+    if (isTaken){
+      res.status(400).json(`that username is already taken`);
+    } else if(!newUser){
+            res.status(400).json(req.body);
+    }
+    const hashedPassword = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync());
+    newUser.password = hashedPassword
+    
+    const createUser = await UserModel.create({
+      username:newUser.username,
+      password:newUser.password
+    }) 
 
-        const newUser = await new UserModel(req.body)
-        if(!newUser){
-                res.status(400).json(req.body);
-        }
-        const hashedPassword = newUser.password;
-        hashPassword(newUser);
-        newUser.password = hashedPassword
-        
-        res.status(200).json(newUser);
-
-
-
+    res.status(200).json(newUser);
+  } catch (error) {
+    res.status(404).json(error);
+  }
+      
         
 }
 
-async function hashPassword (user:any) {
 
-        const password = user.password
-        const saltRounds = 10;
-      
-        const hashedPassword = await new Promise((resolve, reject) => {
-          bcrypt.hash(password, saltRounds, function(err, hash) {
-            if (err) reject(err)
-            resolve(hash)
-          });
-        })
-      
-        return hashedPassword
-      }
 
-export {createUser}
+export const loginUser = async (req:Request,res:Response) => {
+  
+}
