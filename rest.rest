@@ -25,6 +25,6 @@ Content-Type: application/json
 
 {
     "user":"63fce867e39809fb243e593c",
-    "title": "En dag",
+    "title": "Snö i Mars",
     "content": "Vad hände här igår?"   
 }

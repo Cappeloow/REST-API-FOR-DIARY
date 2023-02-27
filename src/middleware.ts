@@ -9,3 +9,13 @@ export const validate = (schema:typeof Schema) => {
     }
 
 }
+
+export const authorization = (req:Request, res:Response, next:NextFunction) => {
+    if(req.session){
+        if (req.session.user){
+            next();
+        } else {
+          return res.status(401).json("You need to log in");
+        }
+    }
+}
