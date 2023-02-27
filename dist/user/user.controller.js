@@ -31,7 +31,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             username: newUser.username,
             password: newUser.password
         });
-        res.status(200).json(newUser);
+        res.status(200).json(createUser);
     }
     catch (error) {
         res.status(404).json(error);
@@ -39,5 +39,26 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.createUser = createUser;
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { username, password } = req.body;
+        console.log(req.body);
+        const foundUser = yield user_model_1.default.findOne({ username });
+        if (!foundUser || !(yield bcrypt_1.default.compare(password, foundUser.password))) {
+            return res.status(401).json("Wrong username or Password");
+        }
+        if (req.session) {
+            req.session.user = {
+                _id: foundUser._id,
+                username: foundUser.userName,
+                isAdmin: foundUser.isAdmin
+            };
+        }
+        const loggedUser = yield user_model_1.default.findOne({ username: foundUser.username }).select('-password');
+        console.log(loggedUser);
+        res.status(200).json(`${loggedUser.username} is now logged in`);
+    }
+    catch (error) {
+        res.status(400).json(error);
+    }
 });
 exports.loginUser = loginUser;

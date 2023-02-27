@@ -1,10 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
+import cookieSession from "cookie-session";
 const UserRoute = require('./user/user.route');
 const app = express();
 
 
-
+app.use(cookieSession({
+secret:"s3cr3t",
+maxAge:60*1000
+}))
 
 app.use(express.json());
 

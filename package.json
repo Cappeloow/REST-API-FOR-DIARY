@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/cookie-session": "^2.0.44",
     "ts-node": "^10.9.1"
   }
 }

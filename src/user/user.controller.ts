@@ -1,6 +1,7 @@
 import UserModel from "./user.model";
 import { Request, Response } from "express-serve-static-core";
 import bcrypt from "bcrypt";
+import { match } from "assert";
 
 export const createUser = async (req:Request,res:Response) => {
   try {
@@ -19,7 +20,7 @@ export const createUser = async (req:Request,res:Response) => {
       password:newUser.password
     }) 
 
-    res.status(200).json(newUser);
+    res.status(200).json(createUser);
   } catch (error) {
     res.status(404).json(error);
   }
@@ -30,5 +31,28 @@ export const createUser = async (req:Request,res:Response) => {
 
 
 export const loginUser = async (req:Request,res:Response) => {
-  
+    
+  try {
+    const {username, password} = req.body;
+    console.log(req.body);
+    const foundUser = await UserModel.findOne({username})
+    if(!foundUser || !await bcrypt.compare(password,foundUser.password)){
+      return res.status(401).json("Wrong username or Password");
+    }
+    
+    if(req.session){
+      req.session.user = {
+        _id: foundUser._id,
+        username: foundUser.userName,
+        isAdmin: foundUser.isAdmin
+      };
+    }
+
+    const loggedUser = await UserModel.findOne({username:foundUser.username}).select('-password');
+    console.log(loggedUser);
+    res.status(200).json(`${loggedUser.username} is now logged in`);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+   
 }
