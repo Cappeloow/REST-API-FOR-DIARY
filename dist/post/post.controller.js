@@ -12,24 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const mongoose_1 = __importDefault(require("mongoose"));
-const cookie_session_1 = __importDefault(require("cookie-session"));
-const UserRoute = require('./user/user.route');
-const DiaryRoute = require("./diary/diary.route");
-const PostRoute = require('./post/post.route');
-const app = (0, express_1.default)();
-app.use((0, cookie_session_1.default)({
-    secret: "s3cr3t",
-    maxAge: 60 * 1000
-}));
-app.use(express_1.default.json());
-app.use('/api/post', PostRoute);
-app.use('/api/diary', DiaryRoute);
-app.use('/api/users', UserRoute);
-const initApp = () => __awaiter(void 0, void 0, void 0, function* () {
-    mongoose_1.default.set("strictQuery", false);
-    yield mongoose_1.default.connect('mongodb://127.0.0.1:27017/diary-api-js-db');
-    app.listen(3000, () => console.log("server is up on port 3000"));
+exports.PostIt = void 0;
+const post_model_1 = __importDefault(require("./post.model"));
+const PostIt = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { user, title, content } = req.body;
+        const createPost = yield post_model_1.default.create({
+            user: user,
+            title: title,
+            content: content
+        });
+        res.status(200).json(createPost);
+    }
+    catch (error) {
+        res.status(404).json(error);
+    }
 });
-initApp();
+exports.PostIt = PostIt;

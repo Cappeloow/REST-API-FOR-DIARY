@@ -3,7 +3,7 @@ POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
  {
-    "username": "joel@hotmail.com",
+    "username": "kaka@hotmail.com",
     "password": "21821112"   
 }
 
@@ -17,4 +17,14 @@ Content-Type: application/json
 {
     "username": "joel@hotmail.com",
     "password": "21821112"   
+}
+
+###
+POST http://localhost:3000/api/post/send
+Content-Type: application/json
+
+{
+    "user":"63fce867e39809fb243e593c",
+    "title": "En dag",
+    "content": "Vad hände här igår?"   
 }

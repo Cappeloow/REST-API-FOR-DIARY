@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cookieSession from "cookie-session";
 const UserRoute = require('./user/user.route');
 const DiaryRoute = require( "./diary/diary.route");
+const PostRoute = require('./post/post.route');
 const app = express();
 
 
@@ -13,6 +14,7 @@ maxAge:60*1000
 
 app.use(express.json());
 
+app.use('/api/post',PostRoute);
 app.use('/api/diary',DiaryRoute);
 app.use('/api/users', UserRoute )
 
