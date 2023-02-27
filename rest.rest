@@ -3,7 +3,7 @@ POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
  {
-    "username": "casper@hotmail.com",
+    "username": "joel@hotmail.com",
     "password": "21821112"   
 }
 
@@ -15,6 +15,6 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-    "username": "casper@hotmail.com",
+    "username": "joel@hotmail.com",
     "password": "21821112"   
 }

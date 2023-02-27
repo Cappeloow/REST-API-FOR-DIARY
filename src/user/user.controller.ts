@@ -1,7 +1,6 @@
 import UserModel from "./user.model";
 import { Request, Response } from "express-serve-static-core";
 import bcrypt from "bcrypt";
-import { match } from "assert";
 
 export const createUser = async (req:Request,res:Response) => {
   try {
@@ -43,13 +42,13 @@ export const loginUser = async (req:Request,res:Response) => {
     if(req.session){
       req.session.user = {
         _id: foundUser._id,
-        username: foundUser.userName,
+        username: foundUser.username,
         isAdmin: foundUser.isAdmin
       };
+      console.log(`${req.session.user.username} is now logged in`);
     }
-
     const loggedUser = await UserModel.findOne({username:foundUser.username}).select('-password');
-    console.log(loggedUser);
+   
     res.status(200).json(`${loggedUser.username} is now logged in`);
   } catch (error) {
     res.status(400).json(error);

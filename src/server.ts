@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cookieSession from "cookie-session";
 const UserRoute = require('./user/user.route');
+const DiaryRoute = require( "./diary/diary.route");
 const app = express();
 
 
@@ -12,7 +13,7 @@ maxAge:60*1000
 
 app.use(express.json());
 
-
+app.use('/api/diary',DiaryRoute);
 app.use('/api/users', UserRoute )
 
 const initApp = async ()   => {

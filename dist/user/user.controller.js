@@ -49,12 +49,12 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (req.session) {
             req.session.user = {
                 _id: foundUser._id,
-                username: foundUser.userName,
+                username: foundUser.username,
                 isAdmin: foundUser.isAdmin
             };
+            console.log(`${req.session.user.username} is now logged in`);
         }
         const loggedUser = yield user_model_1.default.findOne({ username: foundUser.username }).select('-password');
-        console.log(loggedUser);
         res.status(200).json(`${loggedUser.username} is now logged in`);
     }
     catch (error) {
