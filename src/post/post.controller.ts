@@ -5,7 +5,7 @@ import { Post } from "./post.model";
 export const PostIt = async (req:Request, res:Response) => {
     try {
         if (req.session){
-        const {user, title, content} = req.body;
+        const {title, content} = req.body;
         const createPost:Post = await PostModel.create({
         user:req.session.user._id,
         title:title,
@@ -41,7 +41,7 @@ export const ShowEveryPublicPost = async (req:Request, res:Response)=> {
 
 }
 
-export const SpecificPostByName = async (req:Request, res:Response)=> {
+export const SpecificUserPostsByName = async (req:Request, res:Response)=> {
 
     try {
         const posts = await PostModel.find({user:req.params.id});

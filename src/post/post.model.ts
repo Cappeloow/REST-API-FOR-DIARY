@@ -19,11 +19,11 @@ const PostSchema = new Schema({
     title:{type:String, required:true},
     content:{type:String, required:true},
     public:{type:Boolean, default:true}, //this is cool if forexample we can have a payment if users want to see the posts from a specific user.
-    // categories: {
-    //     type: [Schema.Types.ObjectId],
-    //     ref: "category",
-    //     required: true
-    // }
+    categories: {
+        type: [Schema.Types.ObjectId],
+        ref: "category",
+        required: true
+    }
 })
 
 

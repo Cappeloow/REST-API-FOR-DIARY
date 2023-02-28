@@ -12,12 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SpecificPostByName = exports.ShowEveryPublicPost = exports.ShowAllMyPosts = exports.PostIt = void 0;
+exports.SpecificUserPostsByName = exports.ShowEveryPublicPost = exports.ShowAllMyPosts = exports.PostIt = void 0;
 const post_model_1 = __importDefault(require("./post.model"));
 const PostIt = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (req.session) {
-            const { user, title, content } = req.body;
+            const { title, content } = req.body;
             const createPost = yield post_model_1.default.create({
                 user: req.session.user._id,
                 title: title,
@@ -49,7 +49,7 @@ const ShowEveryPublicPost = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.ShowEveryPublicPost = ShowEveryPublicPost;
-const SpecificPostByName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const SpecificUserPostsByName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const posts = yield post_model_1.default.find({ user: req.params.id });
         const publicPosts = posts.filter(post => post.public === true);
@@ -60,4 +60,4 @@ const SpecificPostByName = (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.status(404).json(error);
     }
 });
-exports.SpecificPostByName = SpecificPostByName;
+exports.SpecificUserPostsByName = SpecificUserPostsByName;
