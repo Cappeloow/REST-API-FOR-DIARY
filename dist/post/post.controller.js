@@ -50,5 +50,14 @@ const ShowEveryPublicPost = (req, res) => __awaiter(void 0, void 0, void 0, func
 });
 exports.ShowEveryPublicPost = ShowEveryPublicPost;
 const SpecificPostByName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const posts = yield post_model_1.default.find({ user: req.params.id });
+        const publicPosts = posts.filter(post => post.public === true);
+        publicPosts.length >= 1 ? res.status(200).json(publicPosts) : res.status(400).json("The User has no public posts yet");
+        console.log(req.params.id);
+    }
+    catch (error) {
+        res.status(404).json(error);
+    }
 });
 exports.SpecificPostByName = SpecificPostByName;

@@ -43,4 +43,14 @@ export const ShowEveryPublicPost = async (req:Request, res:Response)=> {
 
 export const SpecificPostByName = async (req:Request, res:Response)=> {
 
+    try {
+        const posts = await PostModel.find({user:req.params.id});
+        const publicPosts = posts.filter(post => post.public === true) 
+        publicPosts.length >= 1 ? res.status(200).json(publicPosts) : res.status(400).json("The User has no public posts yet"); 
+        console.log(req.params.id);
+    } catch (error) {
+        res.status(404).json(error);
+    }
+
+
 }
