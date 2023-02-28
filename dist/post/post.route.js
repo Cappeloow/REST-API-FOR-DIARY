@@ -11,5 +11,6 @@ const post_controller_2 = require("./post.controller");
 const middleware_1 = require("../middleware");
 const route = express_1.default.Router();
 route.post('/send', middleware_1.authorization, post_controller_1.PostIt);
-route.get('/all', middleware_1.authorization, post_controller_2.ShowAllPosts);
+route.get('/all', middleware_1.authorization, post_controller_2.ShowAllMyPosts);
+route.get('/public', post_controller_2.ShowEveryPublicPost);
 module.exports = route;

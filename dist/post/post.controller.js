@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ShowAllPosts = exports.PostIt = void 0;
+exports.SpecificPostByName = exports.ShowEveryPublicPost = exports.ShowAllMyPosts = exports.PostIt = void 0;
 const post_model_1 = __importDefault(require("./post.model"));
 const PostIt = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -31,11 +31,24 @@ const PostIt = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.PostIt = PostIt;
-const ShowAllPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const ShowAllMyPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.session) {
         const posts = yield post_model_1.default.find({ user: req.session.user._id });
         console.log(posts);
         res.status(200).json(posts);
     }
 });
-exports.ShowAllPosts = ShowAllPosts;
+exports.ShowAllMyPosts = ShowAllMyPosts;
+const ShowEveryPublicPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const posts = yield post_model_1.default.find({ public: true });
+        posts.length >= 1 ? res.status(200).json(posts) : res.status(401).json("There is no public posts");
+    }
+    catch (error) {
+        res.status(404).json(error);
+    }
+});
+exports.ShowEveryPublicPost = ShowEveryPublicPost;
+const SpecificPostByName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+exports.SpecificPostByName = SpecificPostByName;

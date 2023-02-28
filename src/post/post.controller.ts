@@ -20,11 +20,27 @@ export const PostIt = async (req:Request, res:Response) => {
 }
 
 
-export const ShowAllPosts = async(req:Request, res:Response)=> {
+export const ShowAllMyPosts = async(req:Request, res:Response)=> {
     if (req.session){
         const posts = await PostModel.find({user:req.session.user._id})
         console.log(posts);
         res.status(200).json(posts);
+    } 
+}
+
+
+export const ShowEveryPublicPost = async (req:Request, res:Response)=> {
+    try {
+        const posts = await PostModel.find({public:true});
+        posts.length >=1? res.status(200).json(posts) : res.status(401).json("There is no public posts");
+
+    } catch (error) {
+        res.status(404).json(error);
     }
+
+
+}
+
+export const SpecificPostByName = async (req:Request, res:Response)=> {
 
 }
