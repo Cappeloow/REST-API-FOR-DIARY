@@ -18,3 +18,13 @@ export const PostIt = async (req:Request, res:Response) => {
         res.status(404).json(error);
     }  
 }
+
+
+export const ShowAllPosts = async(req:Request, res:Response)=> {
+    if (req.session){
+        const posts = await PostModel.find({user:req.session.user._id})
+        console.log(posts);
+        res.status(200).json(posts);
+    }
+
+}

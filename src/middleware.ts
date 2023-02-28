@@ -19,3 +19,9 @@ export const authorization = (req:Request, res:Response, next:NextFunction) => {
         }
     }
 }
+
+export const isAdmin = (req:Request, res:Response, next:NextFunction) => {
+    if(req.session){
+        req.session.isAdmin? next() : res.status(401).json("You need to be admin for this");
+    }
+}

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostIt = void 0;
+exports.ShowAllPosts = exports.PostIt = void 0;
 const post_model_1 = __importDefault(require("./post.model"));
 const PostIt = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -31,3 +31,11 @@ const PostIt = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.PostIt = PostIt;
+const ShowAllPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.session) {
+        const posts = yield post_model_1.default.find({ user: req.session.user._id });
+        console.log(posts);
+        res.status(200).json(posts);
+    }
+});
+exports.ShowAllPosts = ShowAllPosts;
