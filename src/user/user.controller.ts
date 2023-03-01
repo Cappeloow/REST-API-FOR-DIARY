@@ -49,7 +49,7 @@ export const loginUser = async (req:Request,res:Response) => {
     }
     const loggedUser = await UserModel.findOne({username:foundUser.username}).select('-password');
    
-    res.status(200).json(`${loggedUser.username} is now logged in`);
+    res.status(200).json(loggedUser.username);
   } catch (error) {
     res.status(400).json(error);
   }

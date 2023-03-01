@@ -55,7 +55,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             console.log(`${req.session.user.username} is now logged in`);
         }
         const loggedUser = yield user_model_1.default.findOne({ username: foundUser.username }).select('-password');
-        res.status(200).json(`${loggedUser.username} is now logged in`);
+        res.status(200).json(loggedUser.username);
     }
     catch (error) {
         res.status(400).json(error);
