@@ -16,15 +16,13 @@ exports.SpecificUserPostsByName = exports.ShowEveryPublicPost = exports.ShowAllM
 const post_model_1 = __importDefault(require("./post.model"));
 const PostIt = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        if (req.session) {
-            const { title, content } = req.body;
-            const createPost = yield post_model_1.default.create({
-                user: req.session.user._id,
-                title: title,
-                content: content
-            });
-            res.status(200).json(createPost);
-        }
+        const { user, title, content } = req.body;
+        const createPost = yield post_model_1.default.create({
+            user: user,
+            title: title,
+            content: content
+        });
+        res.status(200).json(createPost);
     }
     catch (error) {
         res.status(404).json(error);

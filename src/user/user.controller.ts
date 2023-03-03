@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 export const createUser = async (req:Request,res:Response) => {
   try {
     const newUser = await new UserModel(req.body)
+    console.log(newUser);
     const isTaken = await UserModel.findOne({username:newUser.username});
     if (isTaken){
       res.status(400).json(`that username is already taken`);
@@ -22,6 +23,7 @@ export const createUser = async (req:Request,res:Response) => {
     res.status(200).json(createUser);
   } catch (error) {
     res.status(404).json(error);
+    
   }
       
         
@@ -38,18 +40,9 @@ export const loginUser = async (req:Request,res:Response) => {
     if(!foundUser || !await bcrypt.compare(password,foundUser.password)){
       return res.status(401).json("Wrong username or Password");
     }
-    
-    if(req.session){
-      req.session.user = {
-        _id: foundUser._id,
-        username: foundUser.username,
-        isAdmin: foundUser.isAdmin
-      };
-      console.log(`${req.session.user.username} is now logged in`);
-    }
     const loggedUser = await UserModel.findOne({username:foundUser.username}).select('-password');
    
-    res.status(200).json(loggedUser.username);
+    res.status(200).json(loggedUser);
   } catch (error) {
     res.status(400).json(error);
   }

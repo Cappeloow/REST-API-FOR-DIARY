@@ -1,6 +1,5 @@
 import express from "express";
 import mongoose from "mongoose";
-import cookieSession from "cookie-session";
 import cors from "cors";
 
 const UserRoute = require('./user/user.route');
@@ -9,13 +8,18 @@ const PostRoute = require('./post/post.route');
 const app = express();
 
 
-app.use(cors());
-app.use(cookieSession({
-    secret: "s3cr3t",
-    maxAge: 60 * 1000
-}))
+app.use(cors({
+    origin: 'http://127.0.0.1:5500',
+    credentials: true
+  }));
+
+
+
+
 
 app.use(express.json());
+
+
 
 app.use('/api/post', PostRoute);
 app.use('/api/diary', DiaryRoute);

@@ -6,15 +6,10 @@ const mongoose_1 = require("mongoose");
 //     content:joi.string().min(2).required()
 // });
 const PostSchema = new mongoose_1.Schema({
-    user: { type: mongoose_1.Schema.Types.ObjectId, ref: "user", required: true },
+    user: { type: String, required: true },
     title: { type: String, required: true },
     content: { type: String, required: true },
-    public: { type: Boolean, default: true },
-    categories: {
-        type: [mongoose_1.Schema.Types.ObjectId],
-        ref: "category",
-        required: true
-    }
+    public: { type: Boolean, default: true }, //this is cool if forexample we can have a payment if users want to see the posts from a specific user.
 });
 const PostModel = mongoose_1.models.diary || (0, mongoose_1.model)('post', PostSchema);
 exports.default = PostModel;

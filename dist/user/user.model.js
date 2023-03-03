@@ -15,5 +15,6 @@ const userSchema = new mongoose_1.default.Schema({
     password: { type: String, required: true },
     isAdmin: { type: Boolean, default: false }
 });
+//setName.put?
 const UserModel = mongoose_1.default.models.user || mongoose_1.default.model("user", userSchema);
 exports.default = UserModel;

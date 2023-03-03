@@ -6,9 +6,9 @@ import { ShowAllMyPosts,ShowEveryPublicPost,SpecificUserPostsByName } from "./po
 import { authorization } from "../middleware";
 const route = express.Router();
 
-route.post('/send',authorization, PostIt );
+route.post('/send', PostIt );
 
-route.get('/all', authorization, ShowAllMyPosts )
+route.get('/all', ShowAllMyPosts )
 
 route.get('/public', ShowEveryPublicPost);
 

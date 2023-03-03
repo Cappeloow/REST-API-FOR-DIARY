@@ -18,6 +18,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const newUser = yield new user_model_1.default(req.body);
+        console.log(newUser);
         const isTaken = yield user_model_1.default.findOne({ username: newUser.username });
         if (isTaken) {
             res.status(400).json(`that username is already taken`);
@@ -46,16 +47,8 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!foundUser || !(yield bcrypt_1.default.compare(password, foundUser.password))) {
             return res.status(401).json("Wrong username or Password");
         }
-        if (req.session) {
-            req.session.user = {
-                _id: foundUser._id,
-                username: foundUser.username,
-                isAdmin: foundUser.isAdmin
-            };
-            console.log(`${req.session.user.username} is now logged in`);
-        }
         const loggedUser = yield user_model_1.default.findOne({ username: foundUser.username }).select('-password');
-        res.status(200).json(loggedUser.username);
+        res.status(200).json(loggedUser);
     }
     catch (error) {
         res.status(400).json(error);
