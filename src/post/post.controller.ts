@@ -48,10 +48,10 @@ export const SpecificUserPostsByName = async (req:Request, res:Response)=> {
 
     try {
         //populate const posts = await PostModel.find({ user: req.params.id }).populate('user');
-        const posts = await PostModel.find({user:req.params});
+        console.log(req.body.user);
+        const posts = await PostModel.find({user:req.body.user});
         const publicPosts = posts.filter(post => post.public === true) 
         publicPosts.length >= 1 ? res.status(200).json(publicPosts) : res.status(400).json("The User has no public posts yet"); 
-        console.log(req.params.id);
     } catch (error) {
         res.status(404).json(error);
     }

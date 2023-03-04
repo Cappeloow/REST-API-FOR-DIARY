@@ -24,7 +24,8 @@ POST http://localhost:3000/api/post/send
 Content-Type: application/json
 
 {
-    "title": "I väntan på Juni",
+    "user":"juice",
+    "title": "I väntan på Augusti",
     "content": "Dagar Flyter på som vanligt i samma takt?"   
 }
 
@@ -43,5 +44,5 @@ Content-Type: application/json
 Content-Type: application/json
 
 {
-    "username":"cappeww@live.se"
+    "user":"juice"
 }
