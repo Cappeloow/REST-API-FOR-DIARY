@@ -12,8 +12,9 @@ route.get('/all', ShowAllMyPosts )
 
 route.get('/public', ShowEveryPublicPost);
 
-route.get('/:id', SpecificUserPostsByName);
+route.post('/search', SpecificUserPostsByName);
 
+route.delete('/delete', );
 
 //delete and adjust posts?
 module.exports = route;

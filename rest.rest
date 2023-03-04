@@ -39,4 +39,9 @@ Content-Type: application/json
  GET http://localhost:3000/api/post/public
 
 ###
- GET http://localhost:3000/api/post/63fdd40fa29e21408e0f65f2
+ POST http://localhost:3000/api/post/search
+Content-Type: application/json
+
+{
+    "username":"cappeww@live.se"
+}

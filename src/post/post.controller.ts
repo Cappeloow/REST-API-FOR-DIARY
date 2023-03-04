@@ -18,11 +18,17 @@ export const PostIt = async (req:Request, res:Response) => {
 
 
 export const ShowAllMyPosts = async(req:Request, res:Response)=> {
-    if (req.session){
-        const posts = await PostModel.find({user:req.session.user._id})
+        try {
+        const posts = await PostModel.find({user:req.params})
+        if (!posts){
+            res.status(400).json("You have no posts yet...")
+        }
         console.log(posts);
         res.status(200).json(posts);
-    } 
+        } catch (error) {
+            res.status(404).json(error);
+        }
+        
 }
 
 
@@ -42,7 +48,7 @@ export const SpecificUserPostsByName = async (req:Request, res:Response)=> {
 
     try {
         //populate const posts = await PostModel.find({ user: req.params.id }).populate('user');
-        const posts = await PostModel.find({user:req.params.id});
+        const posts = await PostModel.find({user:req.params});
         const publicPosts = posts.filter(post => post.public === true) 
         publicPosts.length >= 1 ? res.status(200).json(publicPosts) : res.status(400).json("The User has no public posts yet"); 
         console.log(req.params.id);
@@ -51,4 +57,11 @@ export const SpecificUserPostsByName = async (req:Request, res:Response)=> {
     }
 
 
+}
+
+const deletePost = async (req:Request, res:Response) => {
+    const {id} = req.body;
+   const post =  await PostModel.deleteOne({_id:id});
+
+   //if its users posts we have possibility, otherwise dont show the option to delete it.
 }

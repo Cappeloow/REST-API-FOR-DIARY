@@ -30,10 +30,16 @@ const PostIt = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.PostIt = PostIt;
 const ShowAllMyPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.session) {
-        const posts = yield post_model_1.default.find({ user: req.session.user._id });
+    try {
+        const posts = yield post_model_1.default.find({ user: req.params });
+        if (!posts) {
+            res.status(400).json("You have no posts yet...");
+        }
         console.log(posts);
         res.status(200).json(posts);
+    }
+    catch (error) {
+        res.status(404).json(error);
     }
 });
 exports.ShowAllMyPosts = ShowAllMyPosts;
@@ -50,7 +56,7 @@ exports.ShowEveryPublicPost = ShowEveryPublicPost;
 const SpecificUserPostsByName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //populate const posts = await PostModel.find({ user: req.params.id }).populate('user');
-        const posts = yield post_model_1.default.find({ user: req.params.id });
+        const posts = yield post_model_1.default.find({ user: req.params });
         const publicPosts = posts.filter(post => post.public === true);
         publicPosts.length >= 1 ? res.status(200).json(publicPosts) : res.status(400).json("The User has no public posts yet");
         console.log(req.params.id);
@@ -60,3 +66,8 @@ const SpecificUserPostsByName = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.SpecificUserPostsByName = SpecificUserPostsByName;
+const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.body;
+    const post = yield post_model_1.default.deleteOne({ _id: id });
+    //if its users posts we have possibility, otherwise dont show the option to delete it.
+});
