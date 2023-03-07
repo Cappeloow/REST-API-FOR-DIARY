@@ -59,9 +59,23 @@ export const SpecificUserPostsByName = async (req:Request, res:Response)=> {
 
 }
 
-const deletePost = async (req:Request, res:Response) => {
-    const {id} = req.body;
-   const post =  await PostModel.deleteOne({_id:id});
+export const deletePost = async (req:Request, res:Response) => {
+    try {
+    const user = req.body.user;
+    const postId = req.body._id
+    const post =  await PostModel.deleteOne({user,_id:postId });
+    if(!user){
+        res.status(404).json("It's not your post")
+    }
+    if (!post){
+        res.send(404).json("The post doesn't exist");
+    }    
+    await PostModel.deleteOne({ _id: postId });
+    res.status(200).json({ message: 'Post deleted successfully' });
+    } catch (error) {
+        
+    }
+    
 
    //if its users posts we have possibility, otherwise dont show the option to delete it.
 }

@@ -11,6 +11,6 @@ route.post('/send', post_controller_1.PostIt);
 route.get('/all', post_controller_2.ShowAllMyPosts);
 route.get('/public', post_controller_2.ShowEveryPublicPost);
 route.post('/search', post_controller_2.SpecificUserPostsByName);
-route.delete('/delete');
+route.delete('/delete', post_controller_2.deletePost);
 //delete and adjust posts?
 module.exports = route;

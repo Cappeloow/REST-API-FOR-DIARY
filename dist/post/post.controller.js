@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SpecificUserPostsByName = exports.ShowEveryPublicPost = exports.ShowAllMyPosts = exports.PostIt = void 0;
+exports.deletePost = exports.SpecificUserPostsByName = exports.ShowEveryPublicPost = exports.ShowAllMyPosts = exports.PostIt = void 0;
 const post_model_1 = __importDefault(require("./post.model"));
 const PostIt = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -67,7 +67,21 @@ const SpecificUserPostsByName = (req, res) => __awaiter(void 0, void 0, void 0, 
 });
 exports.SpecificUserPostsByName = SpecificUserPostsByName;
 const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.body;
-    const post = yield post_model_1.default.deleteOne({ _id: id });
+    try {
+        const user = req.body.user;
+        const postId = req.body._id;
+        const post = yield post_model_1.default.deleteOne({ user, _id: postId });
+        if (!user) {
+            res.status(404).json("It's not your post");
+        }
+        if (!post) {
+            res.send(404).json("The post doesn't exist");
+        }
+        yield post_model_1.default.deleteOne({ _id: postId });
+        res.status(200).json({ message: 'Post deleted successfully' });
+    }
+    catch (error) {
+    }
     //if its users posts we have possibility, otherwise dont show the option to delete it.
 });
+exports.deletePost = deletePost;
