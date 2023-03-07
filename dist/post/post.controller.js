@@ -70,10 +70,9 @@ const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const user = req.body.user;
         const postId = req.body._id;
-        const post = yield post_model_1.default.deleteOne({ user, _id: postId });
-        if (!user) {
-            res.status(404).json("It's not your post");
-        }
+        console.log(user, postId);
+        const post = yield post_model_1.default.findOne({ _id: postId, user: user });
+        console.log(post);
         if (!post) {
             res.send(404).json("The post doesn't exist");
         }
@@ -81,6 +80,7 @@ const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.status(200).json({ message: 'Post deleted successfully' });
     }
     catch (error) {
+        res.status(400).json(error);
     }
     //if its users posts we have possibility, otherwise dont show the option to delete it.
 });

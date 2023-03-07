@@ -63,17 +63,16 @@ export const deletePost = async (req:Request, res:Response) => {
     try {
     const user = req.body.user;
     const postId = req.body._id
-    const post =  await PostModel.deleteOne({user,_id:postId });
-    if(!user){
-        res.status(404).json("It's not your post")
-    }
+    console.log(user,postId);
+    const post = await PostModel.findOne({ _id: postId, user: user });
+    console.log(post);
     if (!post){
         res.send(404).json("The post doesn't exist");
     }    
     await PostModel.deleteOne({ _id: postId });
     res.status(200).json({ message: 'Post deleted successfully' });
     } catch (error) {
-        
+        res.status(400).json(error);
     }
     
 
