@@ -13,7 +13,8 @@ const PostSchema = new mongoose_1.Schema({
     lastActiveAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    likes: { type: Number, default: 0 }
 });
 const PostModel = mongoose_1.models.diary || (0, mongoose_1.model)('post', PostSchema);
 exports.default = PostModel;

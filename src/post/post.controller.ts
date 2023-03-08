@@ -9,6 +9,11 @@ export const PostIt = async (req:Request, res:Response) => {
         title:title,
         content:content
     });
+    // if (!title){
+    //     return res.status(400).json("Cannot publish without a title");
+    // } else if (!content){
+    //     return res.status(400).json("Cannot publish without content")
+    // }
     res.status(200).json(createPost);
         
     } catch (error) {

@@ -22,7 +22,8 @@ const PostSchema = new Schema({
     lastActiveAt: {
         type: Date,
         default: Date.now
-      }
+      },
+    likes:{type:Number, default:0}
     })
 
 

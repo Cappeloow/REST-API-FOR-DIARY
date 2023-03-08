@@ -22,6 +22,11 @@ const PostIt = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             title: title,
             content: content
         });
+        // if (!title){
+        //     return res.status(400).json("Cannot publish without a title");
+        // } else if (!content){
+        //     return res.status(400).json("Cannot publish without content")
+        // }
         res.status(200).json(createPost);
     }
     catch (error) {
