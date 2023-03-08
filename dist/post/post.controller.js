@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePost = exports.SpecificUserPostsByName = exports.ShowEveryPublicPost = exports.ShowAllMyPosts = exports.PostIt = void 0;
+exports.LikeThePost = exports.deletePost = exports.SpecificUserPostsByName = exports.ShowEveryPublicPost = exports.ShowAllMyPosts = exports.PostIt = void 0;
 const post_model_1 = __importDefault(require("./post.model"));
 const PostIt = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -89,3 +89,18 @@ const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deletePost = deletePost;
+const LikeThePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const postId = req.body._id;
+        const user = req.body.user;
+        const post = yield post_model_1.default.findOne({ _id: postId });
+        if (!post.likes.contains(user)) {
+            post.likes = [...post.likes, user];
+        }
+        res.status(200).json("You liked the post");
+    }
+    catch (error) {
+        res.status(404).json(error);
+    }
+});
+exports.LikeThePost = LikeThePost;

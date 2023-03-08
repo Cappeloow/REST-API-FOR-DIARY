@@ -81,3 +81,17 @@ export const deletePost = async (req: Request, res: Response) => {
     }
   };
   
+  export const LikeThePost = async (req:Request, res:Response) => {
+    try {
+    const postId = req.body._id;
+    const user = req.body.user;
+    const post = await PostModel.findOne({ _id: postId});
+    if (!post.likes.contains(user)){
+        post.likes = [...post.likes, user];
+    }
+    res.status(200).json("You liked the post");
+    } catch (error) {
+        res.status(404).json(error);
+    }
+    
+  }

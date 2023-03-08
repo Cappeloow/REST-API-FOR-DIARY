@@ -12,5 +12,5 @@ route.get('/all', post_controller_2.ShowAllMyPosts);
 route.get('/public', post_controller_2.ShowEveryPublicPost);
 route.post('/search', post_controller_2.SpecificUserPostsByName);
 route.delete('/delete', post_controller_2.deletePost);
-//delete and adjust posts?
+route.put('/like', post_controller_2.LikeThePost);
 module.exports = route;

@@ -1,6 +1,6 @@
 import express from "express";
 import { PostIt } from "./post.controller";
-import { ShowAllMyPosts,ShowEveryPublicPost,SpecificUserPostsByName, deletePost } from "./post.controller";
+import { ShowAllMyPosts,ShowEveryPublicPost,SpecificUserPostsByName, deletePost, LikeThePost } from "./post.controller";
 // import { validate } from "../middleware";
 // import { JoiSchema } from "./post.model";
 import { authorization } from "../middleware";
@@ -16,5 +16,5 @@ route.post('/search', SpecificUserPostsByName);
 
 route.delete('/delete', deletePost);
 
-//delete and adjust posts?
+route.put('/like', LikeThePost);
 module.exports = route;
