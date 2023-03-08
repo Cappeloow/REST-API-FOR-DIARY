@@ -55,3 +55,13 @@ Content-Type: application/json
     "user":"tomas",
     "_id":"6401c85c5d56be6eec84be68"
 }
+
+
+###
+PUT http://localhost:3000/api/post/like
+Content-Type: application/json
+
+{
+    "user":"juice",
+    "_id":"6401c9225d56be6eec84bf03"
+}

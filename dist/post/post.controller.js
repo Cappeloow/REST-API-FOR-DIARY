@@ -94,13 +94,16 @@ const LikeThePost = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const postId = req.body._id;
         const user = req.body.user;
         const post = yield post_model_1.default.findOne({ _id: postId });
-        if (!post.likes.contains(user)) {
+        console.log(post);
+        if (!post.likes.includes(user)) {
             post.likes = [...post.likes, user];
+            console.log("vi är här nu");
+            yield post.save();
+            res.status(200).json(post);
         }
-        res.status(200).json("You liked the post");
     }
     catch (error) {
-        res.status(404).json(error);
+        res.status(404).json({ error: 'Post not found' });
     }
 });
 exports.LikeThePost = LikeThePost;
