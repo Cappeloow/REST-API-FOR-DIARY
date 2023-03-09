@@ -1,8 +1,9 @@
-# REST-API-FOR-DIARY
-API for a online-diary
-TYPESCRIPT - NODE.JS {express} - MONGODB {mongoose}
+# REST API for a Diary Application
+This is a REST API for a diary application, where users can create, read, update, and delete diary entries.
 
-
-
-
-/**INPUT DOCUMENTATION HERE**/
+## Technologies
+* TypeScript
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
