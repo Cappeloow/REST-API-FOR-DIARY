@@ -1,4 +1,4 @@
-# REST-API-EXPRESS-FOR-DIARY
+# REST-API-FOR-DIARY
 API for a online-diary
 TYPESCRIPT - NODE.JS {express} - MONGODB {mongoose}
 
