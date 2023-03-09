@@ -1,6 +1,6 @@
 # REST API for a Diary Application
-This is a REST API for a diary application, where users can login, and register a new account by hotmail.
-but they can also create, read, like posts, delete posts if it's your post and search for user by name,
+This is a REST API for a diary application, where users can login, and register a new account.
+but they can also create, read, like posts, delete posts if it's your post and search for specific user by name,
 
 
 ## Technologies
