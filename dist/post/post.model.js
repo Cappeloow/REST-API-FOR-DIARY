@@ -15,8 +15,7 @@ const PostSchema = new mongoose_1.Schema({
         default: Date.now
     },
     likes: {
-        type: [mongoose_1.Schema.Types.ObjectId],
-        ref: "user",
+        type: [{ type: String }],
     }
 });
 const PostModel = mongoose_1.models.diary || (0, mongoose_1.model)('post', PostSchema);

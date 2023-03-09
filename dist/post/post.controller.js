@@ -93,17 +93,25 @@ const LikeThePost = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const postId = req.body._id;
         const user = req.body.user;
+        console.log(postId, user);
         const post = yield post_model_1.default.findOne({ _id: postId });
-        console.log(post);
-        if (!post.likes.includes(user)) {
-            post.likes = [...post.likes, user];
-            console.log("vi är här nu");
-            yield post.save();
-            res.status(200).json(post);
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
         }
+        const userIndex = post.likes.indexOf(user);
+        if (userIndex === -1) {
+            yield post_model_1.default.updateOne({ _id: postId }, { $push: { likes: user } });
+        }
+        else {
+            post.likes.splice(userIndex, 1);
+            yield post_model_1.default.updateOne({ _id: postId }, { likes: post.likes });
+        }
+        const updatedPost = yield post_model_1.default.findOne({ _id: postId });
+        res.status(200).json(updatedPost);
     }
     catch (error) {
-        res.status(404).json({ error: 'Post not found' });
+        console.log(error);
+        res.status(500).json({ error: 'Server error' });
     }
 });
 exports.LikeThePost = LikeThePost;

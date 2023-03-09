@@ -80,21 +80,33 @@ export const deletePost = async (req: Request, res: Response) => {
       res.status(400).json(error);
     }
   };
-  
-  export const LikeThePost = async (req:Request, res:Response) => {
+
+  export const LikeThePost = async (req: Request, res: Response) => {
     try {
-        const postId = req.body._id;
-        const user = req.body.user;
-        const post = await PostModel.findOne({ _id: postId});
-        console.log(post);
-    if (!post.likes.includes(user)){
-        post.likes = [...post.likes, user];
-        console.log("vi är här nu");
-        await post.save();
-        res.status(200).json(post);
-    } 
+      const postId = req.body._id;
+      const user = req.body.user;
+      console.log(postId, user);
+  
+      const post = await PostModel.findOne({ _id: postId });
+  
+      if (!post) {
+        return res.status(404).json({ error: 'Post not found' });
+      }
+  
+const userIndex = post.likes.indexOf(user);
+if (userIndex === -1) {
+  
+  await PostModel.updateOne({ _id: postId }, { $push: { likes: user } });
+} else {
+  
+  post.likes.splice(userIndex, 1);
+  await PostModel.updateOne({ _id: postId }, { likes: post.likes });
+}
+
+const updatedPost = await PostModel.findOne({ _id: postId });
+res.status(200).json(updatedPost);
     } catch (error) {
-        res.status(404).json({ error: 'Post not found' });
+      console.log(error); 
+      res.status(500).json({ error: 'Server error' });
     }
-    
-  }
+  };

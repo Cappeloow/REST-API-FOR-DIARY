@@ -62,6 +62,6 @@ PUT http://localhost:3000/api/post/like
 Content-Type: application/json
 
 {
-    "user":"juice",
+    "user":"koka",
     "_id":"6401c9225d56be6eec84bf03"
 }
